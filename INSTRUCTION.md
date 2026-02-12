@@ -6,7 +6,7 @@ https://hub.docker.com/repository/docker/nnnikol/todoapp/general
 
 ## 1. Applying Manifests
 
-All Kubernetes manifests are located in the `infrastructure` directory. To ensure the environment is set up correctly, apply them in the following order:
+All Kubernetes manifests are located in the `.infrastructure` directory. To ensure the environment is set up correctly, apply them in the following order:
 
 1. Create the Namespace:
    ```bash
@@ -21,6 +21,7 @@ All Kubernetes manifests are located in the `infrastructure` directory. To ensur
     kubectl apply -f .infrastructure/busybox.yml
 
 ## 2. Testing via Port-Forward
+To access the application from your local machine, use the port-forward command:
 
 1. Run the port-forward command:
     ```bash
@@ -32,12 +33,14 @@ All Kubernetes manifests are located in the `infrastructure` directory. To ensur
     Readiness: Open http://localhost:8080/api/health/ready
 
 ## 3. Testing via busybox container
+To verify internal cluster communication using the busybox container:
 
 1. Retrieve the Pod's internal IP address:
    ```bash
    kubectl get pod todoapp-pod -n todoapp -o wide
 
 2. Execute a curl command from the BusyBox pod:
+Replace <POD_IP> with the actual IP from the step above:
    ```bash
    kubectl exec -it busybox -n todoapp -- curl http://<POD_IP>:8000/api/health/ready
 

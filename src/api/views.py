@@ -6,18 +6,19 @@ from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
 from django.utils import timezone
+import os
 import time
 
-start_time = time.time()
-start_period = 40
+start_time = time.monotonic()
+START_PERIOD = int(os.getenv("START_PERIOD", 40))
 
 def liveness(request):
     return HttpResponse("I am alive!", status=200)
 
 def readiness(request):
     uptime = time.time() - start_time
-    if uptime < start_period:
-        return HttpResponse(f"Starting up... {int(start_period - uptime)}s remaining", status=503)
+    if uptime < START_PERIOD:
+        return HttpResponse(f"Starting up... {int(START_PERIOD - uptime)}s remaining", status=503)
     return HttpResponse("Ready to work!", status=200)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
