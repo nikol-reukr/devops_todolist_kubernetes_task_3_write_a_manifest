@@ -10,21 +10,21 @@ All Kubernetes manifests are located in the `infrastructure` directory. To ensur
 
 1. Create the Namespace:
    ```bash
-   kubectl apply -f infrastructure/namespace.yml
+   kubectl apply -f .infrastructure/namespace.yml
 
 2. Deploy the ToDo Application Pod:
     ```bash
-    kubectl apply -f infrastructure/todoapp-pod.yml
+    kubectl apply -f .infrastructure/todoapp-pod.yml
 
 3. Deploy the BusyBox Testing Pod:
     ```bash
-    kubectl apply -f infrastructure/busybox.yml
+    kubectl apply -f .infrastructure/busybox.yml
 
 ## 2. Testing via Port-Forward
 
-1. Retrieve the Pod's internal IP address:
+1. Run the port-forward command:
     ```bash
-    kubectl get pod todoapp-pod -n todoapp -o wide    
+    kubectl port-forward todoapp-pod 8080:8000 -n todoapp   
    
 2. Verify in your browser or via curl:
     
